@@ -139,20 +139,37 @@ class MainWindow(QMainWindow,Ui_MainWindow):
 
 
     def guardarTarea(self):
-      print(self.t1)
+      for i in self.diccionario:
+       # print(self.diccionario.items())
+        print(self.diccionario.get(i))
+      #print(self.t1)
 
     def eliminarTarea(self):
       self.t1.takeItem(self.t1.indexFromItem(self.t1.currentItem()).row())
-      idEliminado= str((self.t1.indexFromItem(self.t1.currentItem()).row())+1)
-      
-      self.diccionario.pop(idEliminado)
+      idEliminado= (self.t1.indexFromItem(self.t1.currentItem()).row())
+      idReal=str(idEliminado+1)
+      self.diccionario.pop(idReal)
       #hay que sumar 1
       print((self.t1.indexFromItem(self.t1.currentItem()).row()))
       with open("tareas.json", "w") as fichero:
         json.dump(self.diccionario, fichero)
       #self.diccionario = json.load(fichero)
-     
 
+      #Necesito hacer un bucle que recorra todos los componentes del diccionario, y cada vez que se borre uno de ellos que se renombren las
+      #id y se actualicen, es decir, que si tengo 5 elementos y borro el tercero, el id del cuarto pase a ser 3 y la del quinto pase a 4.
+
+      #Pruebas unitarias en guardarTarea.
+
+
+
+      '''
+      self.t1.clear()
+      for i in self.diccionario:
+        self.t1.addItem(QListWidgetItem(self.diccionario.get(i)))
+        self.diccionario[self.contador] = self.diccionario.get(i)
+      with open("tareas.json", "w") as fichero:
+          json.dump(self.diccionario, fichero)
+      '''
 
 
         
