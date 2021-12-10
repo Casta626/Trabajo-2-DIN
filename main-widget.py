@@ -85,6 +85,7 @@ class MainWindow(QMainWindow,Ui_MainWindow):
             #bucle, añadir con el addItem (i)
             
             self.contador = 0
+            self.contador2 = 0
             for i in self.diccionario:
               #self.contador = i
               #self.contador = str(i) #?????
@@ -128,9 +129,9 @@ class MainWindow(QMainWindow,Ui_MainWindow):
         
         textoT2=self.t2.toPlainText()
         #contador = 0
-        self.diccionario[self.contador] = textoT2
-        self.t1.addItem(QListWidgetItem(self.diccionario.get(self.contador)))  #dentro del get poner el ultimo indice.
-        self.contador+=1
+        self.diccionario[self.contador2] = textoT2
+        self.t1.addItem(QListWidgetItem(self.diccionario.get(self.contador2)))  #dentro del get poner el ultimo indice.
+        self.contador2+=1
         self.t2.clear()
         with open("tareas.json", "w") as fichero:
           json.dump(self.diccionario, fichero)
@@ -139,18 +140,50 @@ class MainWindow(QMainWindow,Ui_MainWindow):
 
 
     def guardarTarea(self):
+      self.contador2=0
+      
+      self.diccionario2={}
+      self.diccionario2.clear()
+
+      # mylist = list()
+
+      # self.diccionario2=self.diccionario
       for i in self.diccionario:
        # print(self.diccionario.items())
+        
         print(self.diccionario.get(i))
-      #print(self.t1)
+        array=[self.contador2]
+        print(array)
+        
+        # self.diccionario2.clear()
+        self.diccionario2[self.contador2] = self.diccionario.get(i)
+
+        # mylist.append(self.diccionario.get(i))
+        # print(mylist)
+        
+        self.contador2+=1
+      print(self.diccionario2)
+      with open("tareas.json", "w") as fichero:
+        json.dump(self.diccionario2, fichero)
+        
+        # with open("tareas.json") as fichero:
+        #  self.diccionario2 = json.load(fichero)
+      # print(self.t1)
+
+
+
 
     def eliminarTarea(self):
       self.t1.takeItem(self.t1.indexFromItem(self.t1.currentItem()).row())
       idEliminado= (self.t1.indexFromItem(self.t1.currentItem()).row())
-      idReal=str(idEliminado+1)
+      idReal=str(idEliminado)
+      if idReal==-1:
+        idReal=0
       self.diccionario.pop(idReal)
       #hay que sumar 1
       print((self.t1.indexFromItem(self.t1.currentItem()).row()))
+      print(idReal)
+      print(self.diccionario2)
       with open("tareas.json", "w") as fichero:
         json.dump(self.diccionario, fichero)
       #self.diccionario = json.load(fichero)
