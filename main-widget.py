@@ -5,47 +5,40 @@ from ui_design import Ui_MainWindow
 import recursos_rc
 import json
 '''
-tareas =  '{ "1":"Limpiar", "23":"Sacar la basura", "453":"Fregar"}'
-diccionarioTareas = json.loads(tareas)
-diccionarioTareas["1"] = "Activar robot de limpieza"
-tareas = json.dumps(diccionarioTareas)
-print(tareas)
-with open("tareas.json", "w") as file:
-  json.dump(tareas, file)
-with open("tareas.json") as fichero:
-            tareas = json.load(fichero)
-tareasLista = '["Limpiar", "Sacar la basura", "Fregar"]'
-tareasJson = json.loads(tareasLista)
-'''
-'''
-self.listWidget.addItem(QListWidgetItem(self.data.get(task)))
-Siendo:
-listWidget: El nombre del componente QListWidget
-t1
-self.data: Un diccionario con los pares (identificador de la tarea, descripción de la tarea)
+try
+  tareas =  '{ "1":"Limpiar", "23":"Sacar la basura", "453":"Fregar"}'
+  diccionarioTareas = json.loads(tareas)
+  diccionarioTareas["1"] = "Activar robot de limpieza"
+  tareas = json.dumps(diccionarioTareas)
+  print(tareas)
+  with open("tareas.json", "w") as file:
+    json.dump(tareas, file)
+  with open("tareas.json") as fichero:
+              tareas = json.load(fichero)
+  tareasLista = '["Limpiar", "Sacar la basura", "Fregar"]'
+  tareasJson = json.loads(tareasLista)
 
-task: El elemento del diccionario self.data que desea mostrarse
-'''
+  self.listWidget.addItem(QListWidgetItem(self.data.get(task)))
+  Siendo:
+  listWidget: El nombre del componente QListWidget
+  t1
+  self.data: Un diccionario con los pares (identificador de la tarea, descripción de la tarea)
 
-'''
-json<---->diccionario--->Lista
-'''
+  task: El elemento del diccionario self.data que desea mostrarse
 
-'''
-task =  { "1":"Limpiar", "23":"Sacar la basura", "453":"Fregar"}
-self.data = task
-self.t1.addItem(QListWidgetItem(self.data.get("1")))
-with open("tareas.json", "w") as fichero:
-json.dump(self.data, fichero)
-'''
-        
-          
-'''
-listWidget: El nombre del componente QListWidget
-t1
-self.data: Un diccionario con los pares (identificador de la tarea, descripción de la tarea)
+  json<---->diccionario--->Lista
 
-task: El elemento del diccionario self.data que desea mostrarse
+  task =  { "1":"Limpiar", "23":"Sacar la basura", "453":"Fregar"}
+  self.data = task
+  self.t1.addItem(QListWidgetItem(self.data.get("1")))
+  with open("tareas.json", "w") as fichero:
+  json.dump(self.data, fichero)
+
+  listWidget: El nombre del componente QListWidget
+  t1
+  self.data: Un diccionario con los pares (identificador de la tarea, descripción de la tarea)
+
+  task: El elemento del diccionario self.data que desea mostrarse
 '''
 #Logica boton borrar;   self.t1.takeItem(self.t1.indexFromItem("funcion para pillar el elemento seleccionado").row())
 #"Limpiar" el diccionario
@@ -62,37 +55,20 @@ class MainWindow(QMainWindow,Ui_MainWindow):
         super().__init__()
         self.setupUi(self)
         
-        tareas =  { "1":"Limpiar", "23":"Sacar la basura", "453":"Fregar"}
-        '''
-        tareasLista = '["Limpiar", "Sacar la basura", "Fregar"]'
-        tareasJson = json.loads(tareasLista)
-        print(tareas)
-        print(tareasJson[0])
-
-        d={'a':'Apple','b':'ball'}
-        print(d.keys())
-        print(d.values())
-        print(d.items())
-        print(d.get('a'))
-        print(d.get('b'))
-        '''
-        
         try:
-           self.diccionario=tareas
+           
            with open("tareas.json") as fichero:
-            
             self.diccionario = json.load(fichero)
             #bucle, añadir con el addItem (i)
             
             self.contador = 0
             self.contador2 = 0
+            self.cont = str(self.contador2)
+
             for i in self.diccionario:
-              #self.contador = i
-              #self.contador = str(i) #?????
               self.t1.addItem(QListWidgetItem(self.diccionario.get(i)))
-              
-#https://www.it-swarm-es.com/es/python/como-imprimo-los-pares-clave-valor-de-un-diccionario-en-python/1048744766/
-#Hacer una función para que cada vez que se añada se cree una nueva
+
+            self.guardarTarea()
             
               
         except Exception:
@@ -145,35 +121,16 @@ class MainWindow(QMainWindow,Ui_MainWindow):
       self.diccionario2={}
       self.diccionario2.clear()
 
-      # mylist = list()
-
-      # self.diccionario2=self.diccionario
       for i in self.diccionario:
-       # print(self.diccionario.items())
-        
-        print(self.diccionario.get(i))
-        array=[self.contador2]
-        print(array)
-        
-        # self.diccionario2.clear()
         self.diccionario2[self.contador2] = self.diccionario.get(i)
-
-        # mylist.append(self.diccionario.get(i))
-        # print(mylist)
-        
         self.contador2+=1
-      print(self.diccionario2)
+
       with open("tareas.json", "w") as fichero:
         json.dump(self.diccionario2, fichero)
-        
-        # with open("tareas.json") as fichero:
-        #  self.diccionario2 = json.load(fichero)
-      # print(self.t1)
-
-
 
 
     def eliminarTarea(self):
+      self.guardarTarea()
       self.t1.takeItem(self.t1.indexFromItem(self.t1.currentItem()).row())
       idEliminado= (self.t1.indexFromItem(self.t1.currentItem()).row())
       idReal=str(idEliminado)
@@ -184,8 +141,16 @@ class MainWindow(QMainWindow,Ui_MainWindow):
       print((self.t1.indexFromItem(self.t1.currentItem()).row()))
       print(idReal)
       print(self.diccionario2)
+      self.guardarTarea()
       with open("tareas.json", "w") as fichero:
         json.dump(self.diccionario, fichero)
+      self.guardarTarea()
+
+      # self.diccionario.clear()
+      # self.diccionario = self.diccionario2
+      print(self.diccionario)
+      print(self.diccionario2)
+
       #self.diccionario = json.load(fichero)
 
       #Necesito hacer un bucle que recorra todos los componentes del diccionario, y cada vez que se borre uno de ellos que se renombren las
