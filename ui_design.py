@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'design.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.2.0
+## Created by: Qt User Interface Compiler version 6.2.2
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -26,17 +26,28 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(963, 777)
+        MainWindow.resize(735, 716)
         palette = QPalette()
-        brush = QBrush(QColor(51, 153, 255, 255))
+        brush = QBrush(QColor(227, 227, 227, 255))
         brush.setStyle(Qt.SolidPattern)
-        palette.setBrush(QPalette.Active, QPalette.Highlight, brush)
-        brush1 = QBrush(QColor(240, 240, 240, 255))
+        palette.setBrush(QPalette.Active, QPalette.Button, brush)
+        palette.setBrush(QPalette.Active, QPalette.Base, brush)
+        palette.setBrush(QPalette.Active, QPalette.Window, brush)
+        brush1 = QBrush(QColor(51, 153, 255, 255))
         brush1.setStyle(Qt.SolidPattern)
-        palette.setBrush(QPalette.Inactive, QPalette.Highlight, brush1)
-        palette.setBrush(QPalette.Disabled, QPalette.Highlight, brush)
+        palette.setBrush(QPalette.Active, QPalette.Highlight, brush1)
+        palette.setBrush(QPalette.Inactive, QPalette.Button, brush)
+        palette.setBrush(QPalette.Inactive, QPalette.Base, brush)
+        palette.setBrush(QPalette.Inactive, QPalette.Window, brush)
+        brush2 = QBrush(QColor(240, 240, 240, 255))
+        brush2.setStyle(Qt.SolidPattern)
+        palette.setBrush(QPalette.Inactive, QPalette.Highlight, brush2)
+        palette.setBrush(QPalette.Disabled, QPalette.Button, brush)
+        palette.setBrush(QPalette.Disabled, QPalette.Base, brush)
+        palette.setBrush(QPalette.Disabled, QPalette.Window, brush)
+        palette.setBrush(QPalette.Disabled, QPalette.Highlight, brush1)
         MainWindow.setPalette(palette)
-        MainWindow.setStyleSheet(u"background/color:#ffff00")
+        MainWindow.setStyleSheet(u"background-color: rgb(227, 227, 227);")
         self.actionCopiar = QAction(MainWindow)
         self.actionCopiar.setObjectName(u"actionCopiar")
         icon = QIcon()
@@ -108,12 +119,19 @@ class Ui_MainWindow(object):
         self.centralwidget.setStyleSheet(u"background/color:#ffff00")
         self.verticalLayoutWidget_2 = QWidget(self.centralwidget)
         self.verticalLayoutWidget_2.setObjectName(u"verticalLayoutWidget_2")
-        self.verticalLayoutWidget_2.setGeometry(QRect(150, 50, 581, 591))
+        self.verticalLayoutWidget_2.setGeometry(QRect(10, 10, 581, 591))
         self.verticalLayout_3 = QVBoxLayout(self.verticalLayoutWidget_2)
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
         self.verticalLayout_3.setContentsMargins(0, 0, 0, 0)
         self.t1 = QListWidget(self.verticalLayoutWidget_2)
         self.t1.setObjectName(u"t1")
+        self.t1.setStyleSheet(u"QWidget{\n"
+" font: 10pt \"Ink Free\";\n"
+" border: 2px solid whitesmoke;\n"
+" border-radius: 5px;\n"
+" background-color: rgb(255, 251, 192);\n"
+"}\n"
+"")
 
         self.verticalLayout_3.addWidget(self.t1)
 
@@ -126,6 +144,13 @@ class Ui_MainWindow(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.t2.sizePolicy().hasHeightForWidth())
         self.t2.setSizePolicy(sizePolicy)
+        self.t2.setStyleSheet(u"QWidget{\n"
+" font: 10pt \"Ink Free\";\n"
+" border: 2px solid whitesmoke;\n"
+" border-radius: 5px;\n"
+" background-color: rgb(255, 255, 135);\n"
+"}\n"
+"")
 
         self.horizontalLayout.addWidget(self.t2)
 
@@ -133,16 +158,40 @@ class Ui_MainWindow(object):
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.b3 = QPushButton(self.verticalLayoutWidget_2)
         self.b3.setObjectName(u"b3")
+        self.b3.setStyleSheet(u"QPushButton {\n"
+" border: 2px solid whitesmoke;\n"
+" border-radius: 5px;\n"
+" background-color: rgb(255, 255, 135);\n"
+"}\n"
+"QPushButton:hover {\n"
+" background-color: rgb(170, 170, 150);\n"
+"}")
 
         self.verticalLayout.addWidget(self.b3)
 
         self.b1 = QPushButton(self.verticalLayoutWidget_2)
         self.b1.setObjectName(u"b1")
+        self.b1.setStyleSheet(u"QPushButton {\n"
+" border: 2px solid whitesmoke;\n"
+" border-radius: 5px;\n"
+" background-color: rgb(255, 255, 135);\n"
+"}\n"
+"QPushButton:hover {\n"
+" background-color: rgb(170, 170, 150);\n"
+"}")
 
         self.verticalLayout.addWidget(self.b1)
 
         self.b2 = QPushButton(self.verticalLayoutWidget_2)
         self.b2.setObjectName(u"b2")
+        self.b2.setStyleSheet(u"QPushButton {\n"
+" border: 2px solid whitesmoke;\n"
+" border-radius: 5px;\n"
+" background-color: rgb(255, 255, 135);\n"
+"}\n"
+"QPushButton:hover {\n"
+" background-color: rgb(170, 170, 150);\n"
+"}")
 
         self.verticalLayout.addWidget(self.b2)
 
@@ -158,7 +207,7 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 963, 22))
+        self.menubar.setGeometry(QRect(0, 0, 735, 22))
         self.menuArchivo = QMenu(self.menubar)
         self.menuArchivo.setObjectName(u"menuArchivo")
         self.menuEditar = QMenu(self.menubar)
@@ -295,8 +344,8 @@ class Ui_MainWindow(object):
         self.t2.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", None))
+"</style></head><body style=\" font-family:'Ink Free'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Segoe UI'; font-size:9pt;\"><br /></p></body></html>", None))
         self.b3.setText(QCoreApplication.translate("MainWindow", u"Limpiar", None))
         self.b1.setText(QCoreApplication.translate("MainWindow", u"Nueva tarea", None))
         self.b2.setText(QCoreApplication.translate("MainWindow", u"Eliminar tarea", None))

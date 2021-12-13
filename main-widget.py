@@ -80,9 +80,10 @@ class MainWindow(QMainWindow,Ui_MainWindow):
         self.actionGuardar.triggered.connect(self.guardarTarea)
         self.actionEliminar_Tarea.triggered.connect(self.eliminarTarea)
         self.b2.clicked.connect(self.eliminarTarea)
+        self.actionGuardar_Como.triggered.connect(self.guardarComo)
         
 
-    def añadirTareas(self):
+    def guardarComo(self):
       #Crear el contador para la id del diccionario
       #Crear el string que va a recibir de nuevaTarea
       #Crear el bucle para que cada vez que se añada una nueva tarea se sume el contador y machaque el valor anterior del string
@@ -95,7 +96,8 @@ class MainWindow(QMainWindow,Ui_MainWindow):
       #for i in contador:
 
        # contador+1
-      print("F7")
+      print(self.diccionario)
+      print(self.diccionario2)
 
 #crear un contador para la id y asociarlo al texto de t2, en el get poner solo la id y ya te muestra el contenido.
 
@@ -122,7 +124,7 @@ class MainWindow(QMainWindow,Ui_MainWindow):
       self.diccionario2.clear()
 
       for i in self.diccionario:
-        self.diccionario2[self.contador2] = self.diccionario.get(i)
+        self.diccionario2[str(self.contador2)] = self.diccionario.get(i)
         self.contador2+=1
 
       with open("tareas.json", "w") as fichero:
@@ -140,34 +142,10 @@ class MainWindow(QMainWindow,Ui_MainWindow):
       #hay que sumar 1
       print((self.t1.indexFromItem(self.t1.currentItem()).row()))
       print(idReal)
-      print(self.diccionario2)
       self.guardarTarea()
+      self.diccionario = self.diccionario2
       with open("tareas.json", "w") as fichero:
         json.dump(self.diccionario, fichero)
-      self.guardarTarea()
-
-      # self.diccionario.clear()
-      # self.diccionario = self.diccionario2
-      print(self.diccionario)
-      print(self.diccionario2)
-
-      #self.diccionario = json.load(fichero)
-
-      #Necesito hacer un bucle que recorra todos los componentes del diccionario, y cada vez que se borre uno de ellos que se renombren las
-      #id y se actualicen, es decir, que si tengo 5 elementos y borro el tercero, el id del cuarto pase a ser 3 y la del quinto pase a 4.
-
-      #Pruebas unitarias en guardarTarea.
-
-
-
-      '''
-      self.t1.clear()
-      for i in self.diccionario:
-        self.t1.addItem(QListWidgetItem(self.diccionario.get(i)))
-        self.diccionario[self.contador] = self.diccionario.get(i)
-      with open("tareas.json", "w") as fichero:
-          json.dump(self.diccionario, fichero)
-      '''
 
 
         
