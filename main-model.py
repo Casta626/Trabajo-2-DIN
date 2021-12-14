@@ -8,10 +8,12 @@ import recursos_rc
 import json
 
 class TaskModel(QAbstractListModel,Ui_MainWindow):
-
+    # def __init__(self, parent: Optional[PySide6.QtCore.QObject] = ...) -> None:
+    #     super().__init__(parent=parent)
+    
     def __init__(self):
-        super().__init__()
-        # self.setupUi(self)
+        super().__init__(self)
+        
 
         # Declarar y usar el modelo de datos
           # Declarar el modelo es tan fácil como crear una instancia de la clase creada previamente:
@@ -29,23 +31,6 @@ class TaskModel(QAbstractListModel,Ui_MainWindow):
           # Después de eliminar un elemento, sería bueno desmarcar cualquier selección en el listView. Se puede hacer con el método clearSelection():
         self.listView.clearSelection()
 
-        self.contador = 0
-        self.contador2 = 0
-        '''
-        for i in self.diccionario:
-            self.t1.addItem(QListWidgetItem(self.diccionario.get(i)))
-
-        self.guardarTarea()
-        '''
-
-
-        self.actionNueva_Tarea.triggered.connect(self.nuevaTarea)
-        self.b1.clicked.connect(self.nuevaTarea)
-        self.actionGuardar.triggered.connect(self.guardarTarea)
-        self.actionEliminar_Tarea.triggered.connect(self.eliminarTarea)
-        self.b2.clicked.connect(self.eliminarTarea)
-        self.actionGuardar_Como.triggered.connect(self.guardarComo)
-        
     def data(self,index,role):
       print("SI")
 
@@ -54,6 +39,26 @@ class TaskModel(QAbstractListModel,Ui_MainWindow):
 
     def rowCount(self,index):
       print("SIS")
+
+class MainWindow(QMainWindow,Ui_MainWindow):
+
+    def __init__(self):
+        super().__init__()
+        self.setupUi(self)
+
+        self.contador = 0
+        self.contador2 = 0
+
+        self.guardarTarea()
+       
+        self.actionNueva_Tarea.triggered.connect(self.nuevaTarea)
+        self.b1.clicked.connect(self.nuevaTarea)
+        self.actionGuardar.triggered.connect(self.guardarTarea)
+        self.actionEliminar_Tarea.triggered.connect(self.eliminarTarea)
+        self.b2.clicked.connect(self.eliminarTarea)
+        self.actionGuardar_Como.triggered.connect(self.guardarComo)
+        
+    
     def guardarComo(self):
       
       print("F7")
@@ -103,6 +108,7 @@ class TaskModel(QAbstractListModel,Ui_MainWindow):
       '''
 
 app = QApplication(sys.argv)
-window = TaskModel()
+window = MainWindow()
+window.setWindowTitle('Mis Tareas')
 window.show()
 app.exec()

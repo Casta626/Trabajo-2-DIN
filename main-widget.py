@@ -54,7 +54,6 @@ class MainWindow(QMainWindow,Ui_MainWindow):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
-        
         try:
            
            with open("tareas.json") as fichero:
@@ -133,8 +132,9 @@ class MainWindow(QMainWindow,Ui_MainWindow):
 
     def eliminarTarea(self):
       self.guardarTarea()
-      self.t1.takeItem(self.t1.indexFromItem(self.t1.currentItem()).row())
       idEliminado= (self.t1.indexFromItem(self.t1.currentItem()).row())
+      self.t1.takeItem(self.t1.indexFromItem(self.t1.currentItem()).row())
+      
       idReal=str(idEliminado)
       if idReal==-1:
         idReal=0
@@ -154,5 +154,6 @@ class MainWindow(QMainWindow,Ui_MainWindow):
      
 app = QApplication(sys.argv)
 window = MainWindow()
+window.setWindowTitle('Mis Tareas')
 window.show()
 app.exec()

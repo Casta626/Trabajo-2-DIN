@@ -125,7 +125,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_3.setContentsMargins(0, 0, 0, 0)
         self.listView = QListView(self.verticalLayoutWidget_2)
         self.listView.setObjectName(u"listView")
-        self.listView.setStyleSheet(u"QWidget{\n"
+        self.listView.setStyleSheet(u"QListView{\n"
 " font: 10pt \"Ink Free\";\n"
 " border: 2px solid whitesmoke;\n"
 " border-radius: 5px;\n"
