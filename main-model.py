@@ -1,6 +1,6 @@
 import sys
 from typing import Union
-from PySide6.QtCore import QAbstractListModel
+from PySide6.QtCore import QAbstractListModel, QStringConverter, QStringListModel, Qt
 from PySide6.QtWidgets import QApplication, QListWidget, QListWidgetItem, QMainWindow, QPushButton
 
 from ui_designmodel import Ui_MainWindow
@@ -13,7 +13,7 @@ class TaskModel(QAbstractListModel,Ui_MainWindow):
     
     def __init__(self):
         super().__init__(self)
-        
+        self.array = []
 
         # Declarar y usar el modelo de datos
           # Declarar el modelo es tan fácil como crear una instancia de la clase creada previamente:
@@ -31,14 +31,32 @@ class TaskModel(QAbstractListModel,Ui_MainWindow):
           # Después de eliminar un elemento, sería bueno desmarcar cualquier selección en el listView. Se puede hacer con el método clearSelection():
         self.listView.clearSelection()
 
-    def data(self,index,role):
-      print("SI")
+        self.index = []
 
+    def data(self,index,role):
+      if role != Qt.DisplayRole:
+            return None
+      cat = self._cat_from_idx(index)
+      if cat:
+            # category header
+          if index.column() == 0:
+                return self._categories[index.row()].name
+          return None
+        # item
+      cat = self._cat_from_idx(index.parent())
+      if not cat:
+          return None
+      idx = cat.index(index.row(), index.column())
+      return cat.data(idx) 
+      
+    
     # def rowCount(self, parent: Union[PySide6.QtCore.QModelIndex, PySide6.QtCore.QPersistentModelIndex] = ...) -> int:
     #     return super().rowCount(parent=parent)
 
     def rowCount(self,index):
-      print("SIS")
+      len(index)
+
+    
 
 class MainWindow(QMainWindow,Ui_MainWindow):
 
@@ -56,7 +74,7 @@ class MainWindow(QMainWindow,Ui_MainWindow):
         self.actionGuardar.triggered.connect(self.guardarTarea)
         self.actionEliminar_Tarea.triggered.connect(self.eliminarTarea)
         self.b2.clicked.connect(self.eliminarTarea)
-        self.actionGuardar_Como.triggered.connect(self.guardarComo)
+        self.actionGuardar_Como.triggered.connect(TaskModel.data)
         
     
     def guardarComo(self):
@@ -64,15 +82,12 @@ class MainWindow(QMainWindow,Ui_MainWindow):
       print("F7")
 
     def nuevaTarea(self):
-        '''
         textoT2=self.t2.toPlainText()
         self.diccionario[self.contador2] = textoT2
-        self.t1.addItem(QListWidgetItem(self.diccionario.get(self.contador2))) 
+        
         self.contador2+=1
         self.t2.clear()
-        with open("tareas.json", "w") as fichero:
-          json.dump(self.diccionario, fichero)
-        '''
+       
         
     def guardarTarea(self):
       '''
