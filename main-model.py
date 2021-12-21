@@ -8,53 +8,50 @@ import recursos_rc
 import json
 
 class TaskModel(QAbstractListModel,Ui_MainWindow):
-    # def __init__(self, parent: Optional[PySide6.QtCore.QObject] = ...) -> None:
-    #     super().__init__(parent=parent)
-    
     def __init__(self):
         super().__init__(self)
-        self.array = []
-
-        # Declarar y usar el modelo de datos
-          # Declarar el modelo es tan fácil como crear una instancia de la clase creada previamente:
+        self.task = ["cero","uno","dos","tres","cuatro"]
+        
+          # Declarar y usar el modelo de datos
+        # Declarar el modelo es tan fácil como crear una instancia de la clase creada previamente:
         self.model = TaskModel()
-          # Para asignarlo a un objeto listView, se utiliza el método setModel:
+        # Para asignarlo a un objeto listView, se utiliza el método setModel:
         self.listView.setModel(self.model)
-        # Actualizar la vista del modelo de datos
-          # Cuando los datos de un modelo cambian (se añade o se elimina una tarea), hay que actualizar la vista del objeto listView. Se hace de la siguiente forma (siendo self.model el atributo que almacena el modelo):
-        self.model.layoutChanged.emit()
-        # Acceder a los elementos seleccionados
-          # El método selectedIndexes() devuelve un array de los índices de los elementos que estén seleccionados en el objeto listView:
-        indexes = self.listView.selectedIndexes()
-        # Si solamente hay un elemento seleccionado, el índice de ese elemento será indexes[0].row().
-          # Desmarcar una selección en un listView
-          # Después de eliminar un elemento, sería bueno desmarcar cualquier selección en el listView. Se puede hacer con el método clearSelection():
-        self.listView.clearSelection()
+        
 
-        self.index = []
+    def actualizarDatosModelo(self):
+          # Actualizar la vista del modelo de datos
+        # Cuando los datos de un modelo cambian (se añade o se elimina una tarea), hay que actualizar la vista del objeto listView. Se hace de la siguiente forma (siendo self.model el atributo que almacena el modelo):
+        self.model.layoutChanged.emit()
+
+###################################################################################################################################################
+
+    def indicesSeleccionados(self):
+      
+          # Acceder a los elementos seleccionados
+        # El método selectedIndexes() devuelve un array de los índices de los elementos que estén seleccionados en el objeto listView:
+        indexes = self.listView.selectedIndexes()
+        if len(indexes) == 1:
+          indexes[0].row()
+           # Si solamente hay un elemento seleccionado, el índice de ese elemento será indexes[0].row().
+      
+    def clearSelection(self):
+        # Desmarcar una selección en un listView
+        # Después de eliminar un elemento, sería bueno desmarcar cualquier selección en el listView. Se puede hacer con el método clearSelection():
+          self.listView.clearSelection()
+
+###################################################################################################################################################
 
     def data(self,index,role):
       if role != Qt.DisplayRole:
-            return None
-      cat = self._cat_from_idx(index)
-      if cat:
-            # category header
-          if index.column() == 0:
-                return self._categories[index.row()].name
-          return None
-        # item
-      cat = self._cat_from_idx(index.parent())
-      if not cat:
-          return None
-      idx = cat.index(index.row(), index.column())
-      return cat.data(idx) 
-      
-    
-    # def rowCount(self, parent: Union[PySide6.QtCore.QModelIndex, PySide6.QtCore.QPersistentModelIndex] = ...) -> int:
-    #     return super().rowCount(parent=parent)
+        print("Error")
+      else:
+        return self.task[index]
 
     def rowCount(self,index):
-      len(index)
+      index = len(self.task)
+      return index
+        
 
     
 
@@ -75,6 +72,7 @@ class MainWindow(QMainWindow,Ui_MainWindow):
         self.actionEliminar_Tarea.triggered.connect(self.eliminarTarea)
         self.b2.clicked.connect(self.eliminarTarea)
         self.actionGuardar_Como.triggered.connect(TaskModel.data)
+        self.actionNuevo_Archivo.triggered.connect(TaskModel.rowCount)
         
     
     def guardarComo(self):
@@ -87,6 +85,7 @@ class MainWindow(QMainWindow,Ui_MainWindow):
         
         self.contador2+=1
         self.t2.clear()
+        self.model.layoutChanged.emit()
        
         
     def guardarTarea(self):
@@ -121,6 +120,8 @@ class MainWindow(QMainWindow,Ui_MainWindow):
       with open("tareas.json", "w") as fichero:
         json.dump(self.diccionario, fichero)
       '''
+      
+      
 
 app = QApplication(sys.argv)
 window = MainWindow()
