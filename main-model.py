@@ -9,14 +9,10 @@ import json
 
 class TaskModel(QAbstractListModel,Ui_MainWindow):
     def __init__(self):
-        super().__init__(self)
+        super().__init__()
         self.task = ["cero","uno","dos","tres","cuatro"]
         
-          # Declarar y usar el modelo de datos
-        # Declarar el modelo es tan fácil como crear una instancia de la clase creada previamente:
-        self.model = TaskModel()
-        # Para asignarlo a un objeto listView, se utiliza el método setModel:
-        self.listView.setModel(self.model)
+          
         
 
     def actualizarDatosModelo(self):
@@ -43,10 +39,10 @@ class TaskModel(QAbstractListModel,Ui_MainWindow):
 ###################################################################################################################################################
 
     def data(self,index,role):
-      if role != Qt.DisplayRole:
-        print("Error")
-      else:
+      if role == Qt.DisplayRole:
         return self.task[index]
+      
+        
 
     def rowCount(self,index):
       index = len(self.task)
@@ -60,6 +56,12 @@ class MainWindow(QMainWindow,Ui_MainWindow):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
+
+        # Declarar y usar el modelo de datos
+        # Declarar el modelo es tan fácil como crear una instancia de la clase creada previamente:
+        self.model = TaskModel()
+        # Para asignarlo a un objeto listView, se utiliza el método setModel:
+        self.listView.setModel(self.model)
 
         self.contador = 0
         self.contador2 = 0
