@@ -40,7 +40,7 @@ class TaskModel(QAbstractListModel,Ui_MainWindow):
 
     def data(self,index,role):
       if role == Qt.DisplayRole:
-        return self.task[index]
+        return self.task[index.row()]
       
         
 
@@ -76,7 +76,7 @@ class MainWindow(QMainWindow,Ui_MainWindow):
         self.actionGuardar_Como.triggered.connect(TaskModel.data)
         self.actionNuevo_Archivo.triggered.connect(TaskModel.rowCount)
         
-    
+    # metodo eliminar pop    añadir append   ambos layout changed
     def guardarComo(self):
       
       print("F7")
