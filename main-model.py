@@ -66,11 +66,11 @@ class MainWindow(QMainWindow,Ui_MainWindow):
         self.contador = 0
         self.contador2 = 0
 
-        self.guardarTarea()
+        # self.guardarTarea()
        
         self.actionNueva_Tarea.triggered.connect(self.nuevaTarea)
         self.b1.clicked.connect(self.nuevaTarea)
-        self.actionGuardar.triggered.connect(self.guardarTarea)
+        # self.actionGuardar.triggered.connect(self.guardarTarea)
         self.actionEliminar_Tarea.triggered.connect(self.eliminarTarea)
         self.b2.clicked.connect(self.eliminarTarea)
         self.actionGuardar_Como.triggered.connect(TaskModel.data)
@@ -85,41 +85,50 @@ class MainWindow(QMainWindow,Ui_MainWindow):
         textoT2=self.t2.toPlainText()
         self.diccionario[self.contador2] = textoT2
         
+        indexes = self.listView.selectedIndexes()
+        if len(indexes) == 1:
+          indexes[0].row()
+
         self.contador2+=1
         self.t2.clear()
         self.model.layoutChanged.emit()
        
         
-    def guardarTarea(self):
+    # def guardarTarea(self):
       
-      self.contador2=0
+    #   self.contador2=0
       
-      self.diccionario2={}
-      self.diccionario2.clear()
+    #   self.diccionario2={}
+    #   self.diccionario2.clear()
 
-      for i in self.diccionario:
-        self.diccionario2[str(self.contador2)] = self.diccionario.get(i)
-        self.contador2+=1
+    #   for i in self.diccionario:
+    #     self.diccionario2[str(self.contador2)] = self.diccionario.get(i)
+    #     self.contador2+=1
 
-      with open("tareas2.json", "w") as fichero:
-        json.dump(self.diccionario2, fichero)
+    #   with open("tareas2.json", "w") as fichero:
+    #     json.dump(self.diccionario2, fichero)
       
 
     def eliminarTarea(self):
+
+      indexes = self.listView.selectedIndexes()
+      if len(indexes) == 1:
+          indexes[0].row()
       
-      self.guardarTarea()
-      self.t1.takeItem(self.t1.indexFromItem(self.t1.currentItem()).row())
-      idEliminado= (self.t1.indexFromItem(self.t1.currentItem()).row())
+      # self.guardarTarea()
+      self.listView.pop()
+      # idEliminado= (self.listView.indexFromItem(self.listView.currentItem()).row())
       # idReal=str(idEliminado)
       # if idReal==-1:
         # idReal=0
       # self.diccionario.pop(idReal) 
       self.model.layoutChanged.emit()
 
-      print((self.t1.indexFromItem(self.t1.currentItem()).row()))
+      self.listView.clearSelection()
+      # print((self.listView.indexFromItem(self.t1.currentItem()).row()))
       # print(idReal)
-      self.guardarTarea()
-      self.diccionario = self.diccionario2
+      # self.guardarTarea()
+      self.diccionario = {}
       with open("tareas2.json", "w") as fichero:
         json.dump(self.diccionario, fichero)
       
