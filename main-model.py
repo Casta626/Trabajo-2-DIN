@@ -91,7 +91,7 @@ class MainWindow(QMainWindow,Ui_MainWindow):
        
         
     def guardarTarea(self):
-      '''
+      
       self.contador2=0
       
       self.diccionario2={}
@@ -101,27 +101,28 @@ class MainWindow(QMainWindow,Ui_MainWindow):
         self.diccionario2[str(self.contador2)] = self.diccionario.get(i)
         self.contador2+=1
 
-      with open("tareas.json", "w") as fichero:
+      with open("tareas2.json", "w") as fichero:
         json.dump(self.diccionario2, fichero)
-      '''
+      
 
     def eliminarTarea(self):
-      '''
+      
       self.guardarTarea()
       self.t1.takeItem(self.t1.indexFromItem(self.t1.currentItem()).row())
       idEliminado= (self.t1.indexFromItem(self.t1.currentItem()).row())
-      idReal=str(idEliminado)
-      if idReal==-1:
-        idReal=0
-      self.diccionario.pop(idReal)
+      # idReal=str(idEliminado)
+      # if idReal==-1:
+        # idReal=0
+      # self.diccionario.pop(idReal) 
+      self.model.layoutChanged.emit()
 
       print((self.t1.indexFromItem(self.t1.currentItem()).row()))
-      print(idReal)
+      # print(idReal)
       self.guardarTarea()
       self.diccionario = self.diccionario2
-      with open("tareas.json", "w") as fichero:
+      with open("tareas2.json", "w") as fichero:
         json.dump(self.diccionario, fichero)
-      '''
+      
       
       
 
