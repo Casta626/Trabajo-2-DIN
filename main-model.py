@@ -11,19 +11,19 @@ class TaskModel(QAbstractListModel,Ui_MainWindow):
     def __init__(self):
         super().__init__()
         self.task = []
-        self.task2 = []
-        # self.task = {"0": "cero"}
-        with open("tareas2.json") as fichero:
-             self.task = json.load(fichero)
+        # self.task2 = []
+        # # self.task = {"0": "cero"}
+        # with open("tareas2.json") as fichero:
+        #      self.task = json.load(fichero)
         
-        for i in self.task:
-           self.task2.append(i)
+        # for i in self.task:
+        #    self.task2.append(i)
 
-        self.task = self.task2
-        # self.task2
-        self.task2.append("ocho")
-        self.task2.pop(0)
-        self.diccionario = {}
+        # self.task = self.task2
+        # # self.task2
+        # self.task2.append("ocho")
+        # self.task2.pop(0)
+        # self.diccionario = {}
 
         # self.task = ["cero","uno","dos","tres","cuatro"]
         
@@ -73,16 +73,21 @@ class MainWindow(QMainWindow,Ui_MainWindow):
         super().__init__()
         self.setupUi(self)
 
+        
+
         # Declarar y usar el modelo de datos
         # Declarar el modelo es tan fácil como crear una instancia de la clase creada previamente:
         self.model = TaskModel()
+
+        try:
+          with open("tareas2.json") as fichero:
+            self.model.task = json.load(fichero)
+        except Exception:
+          self.model.task = []
+
         # Para asignarlo a un objeto listView, se utiliza el método setModel:
         self.listView.setModel(self.model)
-
-        self.contador = 0
-        self.contador2 = 0
-
-       
+   
         self.actionNueva_Tarea.triggered.connect(self.nuevaTarea)
         self.b1.clicked.connect(self.nuevaTarea)
         # self.actionGuardar.triggered.connect(self.guardarTarea)
@@ -98,68 +103,25 @@ class MainWindow(QMainWindow,Ui_MainWindow):
 
     def nuevaTarea(self):
 
-        TaskModel.task = []
-        TaskModel.task2 = []
+        textoT2=self.t2.toPlainText()
+
+        self.model.task.append(textoT2)
+
+        self.model.layoutChanged.emit()
+
         with open("tareas2.json", "w") as fichero:
-          json.dump( TaskModel.task, fichero)
-    
-        for i in TaskModel.task:
-           TaskModel.task2.append(i)
-
-        textoT2=str(self.t2.toPlainText())
-        
-        # self.diccionario3[self.contador2] = textoT2
-        
-        indexes = self.listView.selectedIndexes()
-        if len(indexes) == 1:
-          indexes[0].row()
-        
-        TaskModel.task.append(textoT2)
-
-
-        # self.contador2+=1
-        # self.t2.clear()
-        # self.model.layoutChanged.emit()
-        # with open("tareas2.json", "w") as fichero:
-        #   json.dump(self.diccionario3, fichero)
-        
-    # def guardarTarea(self):
-      
-    #   self.contador2=0
-      
-    #   self.diccionario2={}
-    #   self.diccionario2.clear()
-
-    #   for i in self.diccionario:
-    #     self.diccionario2[str(self.contador2)] = self.diccionario.get(i)
-    #     self.contador2+=1
-
-    #   with open("tareas2.json", "w") as fichero:
-    #     json.dump(self.diccionario2, fichero)
-      
+          json.dump( self.model.task, fichero) 
 
     def eliminarTarea(self):
 
-      indexes = self.listView.selectedIndexes()
-      if len(indexes) == 1:
-          indexes[0].row()
-      
-      # self.guardarTarea()
-      self.listView.destroy()
-      # idEliminado= (self.listView.indexFromItem(self.listView.currentItem()).row())
-      # idReal=str(idEliminado)
-      # if idReal==-1:
-        # idReal=0
-      # self.diccionario.pop(idReal) 
+      indice = self.listView.selectedIndexes()
+
+      self.model.task.pop(indice[0].row())
+
       self.model.layoutChanged.emit()
 
-      self.listView.clearSelection()
-      # print((self.listView.indexFromItem(self.t1.currentItem()).row()))
-      # print(idReal)
-      # self.guardarTarea()
-      self.diccionario3 = {}
       with open("tareas2.json", "w") as fichero:
-        json.dump(self.diccionario3, fichero)
+        json.dump(self.model.task, fichero)
       
       
       
